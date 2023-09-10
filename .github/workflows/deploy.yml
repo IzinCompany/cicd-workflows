@@ -25,7 +25,7 @@ on:
 jobs:
   
   deployDev:
-    name: Deploy to Cloud Hub
+    name: Deploy to Cloud Hub on ${{ inputs.environment }}
     runs-on: ubuntu-latest
     environment: 
       name: ${{ inputs.environment }}
