@@ -63,17 +63,19 @@ jobs:
         AP_Target: ${{ vars.AP_PrivateSpace_Sandbox_Name }}
         AP_replicas: ${{ vars.AP_replicas }}
         AP_vcores: ${{ vars.AP_vcores }}
-      run: 
-        mvn deploy -DmuleDeploy -DskipMunitTests -s .maven/settings.xml
-            -Denv.AP_Environment=$AP_Environment 
-            -Dapp.name=$AP_Full_Application_Name 
-            -DAP_Organization_ID=$AP_Organization_ID 
-            -DAP_CICD_ConnectedApp_ClientID=$AP_CICD_ConnectedApp_ClientID 
-            -DAP_CICD_ConnectedApp_ClientSecret=$AP_CICD_ConnectedApp_ClientSecret 
-            -DAP_ENV_ClientID=$AP_ENV_ClientID 
-            -DAP_ENV_ClientSecret=$AP_ENV_ClientSecret 
-            -DAP_CH_Runtime_Version=$AP_CH_Runtime_Version 
-            -DAP_Target=$AP_Target
-            -DAP_replicas=$AP_replicas
-            -DAP_vcores=$AP_vcores
+      run: |
+        artifactName=$(ls *.jar | head -1)
+        mvn deploy -DmuleDeploy -DskipMunitTests -s .maven/settings.xml \
+            -Dmule.artifact=$artifactName \
+            -Denv.AP_Environment=$AP_Environment \
+            -Dapp.name=$AP_Full_Application_Name \
+            -DAP_Organization_ID=$AP_Organization_ID \
+            -DAP_CICD_ConnectedApp_ClientID=$AP_CICD_ConnectedApp_ClientID \
+            -DAP_CICD_ConnectedApp_ClientSecret=$AP_CICD_ConnectedApp_ClientSecret \
+            -DAP_ENV_ClientID=$AP_ENV_ClientID \
+            -DAP_ENV_ClientSecret=$AP_ENV_ClientSecret \
+            -DAP_CH_Runtime_Version=$AP_CH_Runtime_Version \
+            -DAP_Target=$AP_Target \
+            -DAP_replicas=$AP_replicas \
+            -DAP_vcores=$AP_vcores \
             -Dmule.env=$AP_Environment
