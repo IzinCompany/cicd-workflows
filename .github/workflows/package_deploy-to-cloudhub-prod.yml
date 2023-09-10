@@ -9,7 +9,7 @@
 name: Package, Deploy to exchange, Deploy to Cloud Hub - Prod
 
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
       runtimeVersion:
         description: 'Version of the runtime that will run the deployed asset'
