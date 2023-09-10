@@ -9,12 +9,6 @@
 name: Package, Deploy to exchange, Deploy to Cloud Hub - Dev
 
 on:
-  pull_request:
-    branches:
-      - 'develop'
-    types:
-      - 'closed'
-
   workflow_call:
     inputs:
       runtimeVersion:
@@ -24,10 +18,11 @@ on:
         type: choice
         options:
         - 4.4.0
+
 jobs:
   
-  package_deployExchange_deployCHDev:
-    name: Package, and deploy to exchange, then deploy to Cloud Hub - Dev
+  deployDev:
+    name: Deploy to Cloud Hub - Dev
     runs-on: ubuntu-latest
     environment: 
       name: Dev
@@ -45,15 +40,9 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-maven-
 
-    - name: Package and deploy to Exchange
-      id: package-deploy-exchange
-      env:
-        MuleSoft_EE_Rep_Username: ${{ secrets.MuleSoft_EE_Rep_Username }}
-        MuleSoft_EE_Rep_Password: ${{ secrets.MuleSoft_EE_Rep_Password }}
-        AP_CICD_ConnectedApp_ClientID: ${{ secrets.AP_CICD_ConnectedApp_ClientID }}
-        AP_CICD_ConnectedApp_ClientSecret: ${{ secrets.AP_CICD_ConnectedApp_ClientSecret }}
-        AP_Organization_ID: ${{ secrets.AP_Organization_ID }}
-      run: mvn deploy -DskipMunitTests -s .maven/settings.xml
+    - uses: actions/download-artifact@v3
+      with:
+        name: package
 
     - name: Deploy to Cloudhub on Dev
       id: deploy-ch-dev
