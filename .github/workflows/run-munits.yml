@@ -6,13 +6,13 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Unit test
+name: Reusabe workflow to run MUnits
 
 on:
   workflow_call:
 
 jobs:
-  runMUnits:
+  run:
     name: Run MUnits
     runs-on: ubuntu-latest
     steps:
